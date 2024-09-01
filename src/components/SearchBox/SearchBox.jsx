@@ -1,7 +1,7 @@
 import css from './SearchBox.module.css';
 import PropTypes from 'prop-types';
 
-const SearchBox = ({ filterValue, handleFilter }) => {
+const SearchBox = ({ selectNameFilter, handleFilter }) => {
   const { searchContainer, searchTitle, searchInput } = css;
   return (
     <div className={searchContainer}>
@@ -10,7 +10,7 @@ const SearchBox = ({ filterValue, handleFilter }) => {
         type="text"
         placeholder="Search..."
         className={searchInput}
-        value={filterValue}
+        value={selectNameFilter}
         onChange={handleFilter}
       />
     </div>
@@ -18,7 +18,7 @@ const SearchBox = ({ filterValue, handleFilter }) => {
 };
 
 SearchBox.propTypes = {
-  filterValue: PropTypes.string.isRequired,
+  selectNameFilter: PropTypes.string.isRequired,
   handleFilter: PropTypes.func.isRequired,
 };
 

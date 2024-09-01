@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import './App.css';
 import ContactForm from './ContactForm/ContactForm';
 import SearchBox from './SearchBox/SearchBox';
@@ -7,9 +7,10 @@ import ContactList from './ContactList/ContactList';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, deleteContact } from '../redux/contactsSlice';
+import { changeFilter } from '../redux/filtersSlice';
 
 function App() {
-  // contacts state + LS data saving ======================> Замінив на юсеСелектор
+  // contacts state + LS data saving ========> Замінив на юсеСелектор
   // const [contacts, setContacts] = useState(() => {
   //   const savedContacts = JSON.parse(localStorage.getItem('savedContacts'));
   //   return savedContacts || contactsFromServer;
@@ -20,7 +21,7 @@ function App() {
 
   const dispatch = useDispatch();
   const selectContacts = useSelector(state => {
-    console.log(state);
+    // console.log(state);
     return state.contacts.contacts.items;
   });
 
@@ -45,25 +46,31 @@ function App() {
 
   // control component: input from searchBox
   // const [filterValue, setFilterValue] = useState('');
-  const changeFilter = useSelector(state => {
-    console.log(state);
-    return state.contacts.contacts.filters;
+  const selectNameFilter = useSelector(state => {
+    return state.filters.filters.name;
   });
+
   const handleFilter = event => {
     const value = event.target.value;
-    setFilterValue(value);
+
+    const action = changeFilter(value);
+    // setFilterValue(value);
+    dispatch(action);
   };
 
   // contacts filtration logic
   const filteredContacts = selectContacts.filter(contact =>
-    contact.name.toLowerCase().includes(filterValue.toLowerCase())
+    contact.name.toLowerCase().includes(selectNameFilter.toLowerCase())
   );
 
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm onAddContact={onAddContact} />
-      <SearchBox filterValue={filterValue} handleFilter={handleFilter} />
+      <SearchBox
+        selectNameFilter={selectNameFilter}
+        handleFilter={handleFilter}
+      />
       <ContactList
         contacts={filteredContacts}
         onDeleteContact={onDeleteContact}
