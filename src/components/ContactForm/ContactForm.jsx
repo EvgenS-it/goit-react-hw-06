@@ -1,7 +1,9 @@
 import css from './ContactForm.module.css';
-import PropTypes from 'prop-types';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
+import { addContact } from '../../redux/contactsSlice';
 
 // for Yup
 const phoneRegExp = /^[0-9]{3}-[0-9]{2}-[0-9]{2}$/;
@@ -22,22 +24,19 @@ const INITIAL_VALUES = {
   contactNumber: '',
 };
 
-const ContactForm = ({ onAddContact }) => {
+const ContactForm = () => {
   const { form, label, title, input, btn, errorText } = css;
 
-  // NOT control form data collection without Formik
-  // const handleSubmit = event => {
-  //   event.preventDefault();
+  const dispatch = useDispatch();
 
-  //   const formElements = event.currentTarget.elements;
-  //   const name = formElements.contactName.value;
-  //   const number = formElements.contactNumber.value;
-  //   const contactObject = { name, number };
-
-  //   onAddContact(contactObject);
-
-  //   event.currentTarget.reset();
-  // };
+  const onAddContact = newContact => {
+    const finalContact = {
+      ...newContact,
+      id: nanoid(),
+    };
+    // setContacts(prevContacts => [finalContact, ...prevContacts]);
+    dispatch(addContact(finalContact));
+  };
 
   const handleSubmit = (values, actions) => {
     const contactObject = {
@@ -96,10 +95,6 @@ const ContactForm = ({ onAddContact }) => {
       }}
     </Formik>
   );
-};
-
-ContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
 };
 
 export default ContactForm;

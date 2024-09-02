@@ -1,7 +1,20 @@
+import { useDispatch, useSelector } from 'react-redux';
 import css from './SearchBox.module.css';
-import PropTypes from 'prop-types';
+import { changeFilter } from '../../redux/filtersSlice';
 
-const SearchBox = ({ selectNameFilter, handleFilter }) => {
+const SearchBox = () => {
+  const dispatch = useDispatch();
+  const selectNameFilter = useSelector(state => {
+    state.filters.filters.name;
+  });
+
+  const handleFilter = event => {
+    const value = event.target.value;
+    const action = changeFilter(value);
+    // setFilterValue(value);
+    dispatch(action);
+  };
+
   const { searchContainer, searchTitle, searchInput } = css;
   return (
     <div className={searchContainer}>
@@ -15,11 +28,6 @@ const SearchBox = ({ selectNameFilter, handleFilter }) => {
       />
     </div>
   );
-};
-
-SearchBox.propTypes = {
-  selectNameFilter: PropTypes.string.isRequired,
-  handleFilter: PropTypes.func.isRequired,
 };
 
 export default SearchBox;
