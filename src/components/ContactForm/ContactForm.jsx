@@ -29,23 +29,18 @@ const ContactForm = () => {
 
   const dispatch = useDispatch();
 
-  const onAddContact = newContact => {
-    const finalContact = {
-      ...newContact,
-      id: nanoid(),
-    };
-    // setContacts(prevContacts => [finalContact, ...prevContacts]);
-    dispatch(addContact(finalContact));
-  };
-
   const handleSubmit = (values, actions) => {
     const contactObject = {
       name: values.contactName,
       number: values.contactNumber,
     };
 
-    onAddContact(contactObject);
+    const finalContact = {
+      ...contactObject,
+      id: nanoid(),
+    };
 
+    dispatch(addContact(finalContact));
     actions.resetForm();
   };
 
