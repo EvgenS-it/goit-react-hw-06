@@ -3,7 +3,10 @@ import css from './SearchBox.module.css';
 import { changeFilter } from '../../redux/filtersSlice';
 
 const SearchBox = () => {
+  const { searchContainer, searchTitle, searchInput } = css;
+
   const dispatch = useDispatch();
+
   const selectNameFilter = useSelector(state => {
     state.filters.filters.name;
   });
@@ -15,7 +18,6 @@ const SearchBox = () => {
     dispatch(action);
   };
 
-  const { searchContainer, searchTitle, searchInput } = css;
   return (
     <div className={searchContainer}>
       <h2 className={searchTitle}>Find contacts by name</h2>

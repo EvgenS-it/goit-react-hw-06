@@ -5,6 +5,7 @@ import { FaPhone } from 'react-icons/fa6';
 
 const Connact = ({ name, number, onDeleteContact, id }) => {
   const { infoContainer, icon, text, btn } = css;
+
   return (
     <>
       <div className={infoContainer}>
